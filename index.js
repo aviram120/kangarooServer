@@ -69,6 +69,9 @@ app.get('/', function(request, response) {
 app.get('/test', function(request, response) {
   response.json('good!');
 });
+app.get('/test2', function(request, response) {
+  response.json('good2!');
+});
 
 app.get('/getMysql', function (request, response) {
 	connectDatabase().query('select * from  users', function(err, rows, fields) {
