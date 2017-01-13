@@ -70,7 +70,7 @@ app.get('/test', function(request, response) {
   response.json('good!');
 });
 app.get('/test2', function(request, response) {
-  response.json('good2!');
+  response.json('good33!');
 });
 
 app.get('/getMysql', function (request, response) {
