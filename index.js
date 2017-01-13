@@ -67,7 +67,7 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 app.get('/test', function(request, response) {
-  response.json('good88');
+  response.json('good99');
 });
 
 app.get('/getMysql', function (request, response) {
