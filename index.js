@@ -69,8 +69,8 @@ app.get('/', function(request, response) {
 app.get('/test', function(request, response) {
   response.json('good!');
 });
-app.get('/test55', function(request, response) {
-  response.json('good55!');
+app.get('/test66', function(request, response) {
+  response.json('good66!');
 });
 
 app.get('/getMysql', function (request, response) {
