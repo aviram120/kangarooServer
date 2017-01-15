@@ -76,7 +76,7 @@ app.get('/getMysql', function (request, response) {
 				console.log('error: ', err);
 				throw err;
 			}
-			response.json({success:true, data:rows });
+			response.json({success:true, data:rows[0] });
 		});
 	
 	//mysqlConnector.release(); 
