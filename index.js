@@ -71,7 +71,7 @@ app.get('/test', function(request, response) {
 });
 
 app.get('/getMysql', function (request, response) {
-	connectDatabase().query('select * from  users', function(err, rows, fields) {
+	connectDatabase().query('call GetAllUserd()', function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
 				throw err;
