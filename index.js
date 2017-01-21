@@ -167,10 +167,10 @@ app.post('/update_user', function (request, response,next) {
 	
 console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")');
 	
-/*
+
 	//{"birthDay":"14.08.1988", "phone":"545", "about":"king!"}
 	//`update_user`(IN userd_id_In int, IN phoneIn VARCHAR(45),IN birth_dayIn date,IN aboutIn VARCHAR(45))
-	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', ' + userPropertiesJson['birthDay'] + ', ' + userPropertiesJson['about'] +')', function(err, rows, fields) {
+	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
 				throw err;
@@ -179,7 +179,7 @@ console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] 
 		});
 	*/
 	
-	/*
+	
 	client.connect(dbConnUrl, function(err, db) {
 	  if (err) throw err;
 
