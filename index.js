@@ -172,7 +172,7 @@ app.post('/update_user', function (request, response,next) {
 				throw err;
 			}
 			
-			stReturn  = stReturn + "update_user: true ,";
+			stReturn  = "update_user: true ,";
 		});
 		
 	console.log('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')');
@@ -184,7 +184,7 @@ app.post('/update_user', function (request, response,next) {
 				throw err;
 			}
 			
-			stReturn  = stReturn + "add_location: true ";
+			//stReturn  = stReturn + "add_location: true ";
 		});
 		
 	console.log("update_user[response] - " + stReturn);
