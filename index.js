@@ -165,7 +165,9 @@ app.post('/update_user', function (request, response,next) {
 	var userPropertiesJson = JSON.parse(userProperties);
 	var locationJson = JSON.parse(location);
 	
+	console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', ' + userPropertiesJson['birthDay'] + ', ' + userPropertiesJson['about'] +')');
 	
+/*
 	//{"birthDay":"14.08.1988", "phone":"545", "about":"king!"}
 	//`update_user`(IN userd_id_In int, IN phoneIn VARCHAR(45),IN birth_dayIn date,IN aboutIn VARCHAR(45))
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', ' + userPropertiesJson['birthDay'] + ', ' + userPropertiesJson['about'] +')', function(err, rows, fields) {
@@ -175,7 +177,7 @@ app.post('/update_user', function (request, response,next) {
 			}
 			response.json({success:true, data:rows[0] });
 		});
-	
+	*/
 	
 	/*
 	client.connect(dbConnUrl, function(err, db) {
