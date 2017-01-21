@@ -173,7 +173,7 @@ app.post('/update_user', function (request, response,next) {
 			}
 			console.log("stReturn:" + stReturn);
 		});
-	stReturn  = "update_user: true ,";
+	stReturn  = '"update_user": "true" ';
 	
 	connectDatabase().query('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')', function(err, rows, fields) {
 			if (err) {
@@ -181,7 +181,7 @@ app.post('/update_user', function (request, response,next) {
 				throw err;
 			}
 		});
-	stReturn  = stReturn + "add_location: true ";	
+	stReturn  = stReturn + '"add_location" : "true"';	
 	
 	console.log("update_user[response]:" + stReturn);
 	response.json({success:true, data:stReturn });
