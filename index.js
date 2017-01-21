@@ -165,7 +165,7 @@ app.post('/update_user', function (request, response,next) {
 	var userPropertiesJson = JSON.parse(userProperties);
 	var locationJson = JSON.parse(location);
 	
-	console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', ' + userPropertiesJson['birthDay'] + ', ' + userPropertiesJson['about'] +')');
+console.log("call update_user( " + userId + " , " + userPropertiesJson["phone"] + ", '" + userPropertiesJson["birthDay"] + "', "' + userPropertiesJson["about"] + "')");
 	
 /*
 	//{"birthDay":"14.08.1988", "phone":"545", "about":"king!"}
