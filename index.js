@@ -173,7 +173,7 @@ app.post('/update_user', function (request, response,next) {
 				console.log('error: ', err);
 				throw err;
 			}
-			console.log("rows:" + row);
+			console.log("rows:" + rows);
 			console.log("fields:" + fields);
 			response.json({success:true, data:rows[0] });
 		});
