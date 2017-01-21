@@ -155,6 +155,50 @@ app.get('/getUser', function (request, response,next) {
 });
 
 
+app.post('/update_user', function (request, response,next) {
+	//add user to mongoDB
+	var userId = request.body.userId;
+	var user_properties = request.body.userProperties;
+	var location = request.body.location;
+	
+	console.log("update_user[request] - userId:" + userId + ",user_properties:" +  user_properties + ",location: " + location);
+	
+	/*
+	//`update_user`(IN userd_id_In int, IN phoneIn VARCHAR(45),IN birth_dayIn date,IN aboutIn VARCHAR(45))
+	connectDatabase().query('call update_user( ' + userId + ' , ' + + ')', function(err, rows, fields) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			response.json({success:true, data:rows[0] });
+		});
+	*/	
+	/*
+	client.connect(dbConnUrl, function(err, db) {
+	  if (err) throw err;
+
+	  //simple json record
+		var document = { "UserName" : userName, "Password" : password , "FirstName" : firstName , "LastName" : lastName, "Birthday" : birthday,  "PhoneNum" : phoneNum , "Mail" : mail ,"Timestamp" : new Date().getTime() };
+	  
+		//insert record
+		db.collection('users').insert(document, function(err, records) {
+			var stResp;
+			try 
+			{
+				response.json({success:true, data:'id: ' +document._id}); 
+				stResp = "id in DB: " + document._id;
+			}
+			catch (e) {
+				response.json({success:false, data:err});	
+				stResp = "ERROR: " + err;
+			}
+			
+			console.log("addUser[response] - " + stResp);
+		});
+	});
+	*/
+});
+
 
 
 app.listen(app.get('port'), function() {
