@@ -177,7 +177,7 @@ console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] 
 			}
 			response.json({success:true, data:rows[0] });
 		});
-	*/
+	
 	
 	
 	client.connect(dbConnUrl, function(err, db) {
