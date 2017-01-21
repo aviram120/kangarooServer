@@ -165,7 +165,7 @@ app.post('/update_user', function (request, response,next) {
 	var userPropertiesJson = JSON.parse(userProperties);
 	var locationJson = JSON.parse(location);
 	
-	var stReturn = "";
+	var stReturn;
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
@@ -188,7 +188,7 @@ app.post('/update_user', function (request, response,next) {
 			//stReturn  = stReturn + "add_location: true ";
 		});
 		
-	console.log("update_user[response] - " + stReturn);
+	console.log("update_user[response]:" + stReturn);
 	response.json({success:true, data:stReturn });
 });
 
