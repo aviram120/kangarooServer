@@ -172,7 +172,7 @@ app.post('/update_user', function (request, response,next) {
 				throw err;
 			}
 		});
-	stReturn  = 'update_user: true ';
+	stReturn  = 'update_user: true, ';
 	
 	connectDatabase().query('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')', function(err, rows, fields) {
 			if (err) {
