@@ -172,8 +172,8 @@ app.post('/update_user', function (request, response,next) {
 				throw err;
 			}
 			
-			stReturn  = "update_user: true ,";
-			console.log(stReturn);
+			stReturn  = stReturn + "update_user: true ";
+			console.log("stReturn:" + stReturn);
 		});
 		
 	console.log('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')');
