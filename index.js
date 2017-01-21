@@ -165,9 +165,7 @@ app.post('/update_user', function (request, response,next) {
 	var userPropertiesJson = JSON.parse(userProperties);
 	var locationJson = JSON.parse(location);
 	
-console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")');
 	
-
 	//{"birthDay":"14.08.1988", "phone":"545", "about":"king!"}
 	//`update_user`(IN userd_id_In int, IN phoneIn VARCHAR(45),IN birth_dayIn date,IN aboutIn VARCHAR(45))
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
@@ -175,34 +173,10 @@ console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] 
 				console.log('error: ', err);
 				throw err;
 			}
+			console.log("rows:" + row);
+			console.log("fields:" + fields);
 			response.json({success:true, data:rows[0] });
 		});
-	
-	
-	/*
-	client.connect(dbConnUrl, function(err, db) {
-	  if (err) throw err;
-
-	  //simple json record
-		var document = { "UserName" : userName, "Password" : password , "FirstName" : firstName , "LastName" : lastName, "Birthday" : birthday,  "PhoneNum" : phoneNum , "Mail" : mail ,"Timestamp" : new Date().getTime() };
-	  
-		//insert record
-		db.collection('users').insert(document, function(err, records) {
-			var stResp;
-			try 
-			{
-				response.json({success:true, data:'id: ' +document._id}); 
-				stResp = "id in DB: " + document._id;
-			}
-			catch (e) {
-				response.json({success:false, data:err});	
-				stResp = "ERROR: " + err;
-			}
-			
-			console.log("addUser[response] - " + stResp);
-		});
-	});
-	*/
 });
 
 
