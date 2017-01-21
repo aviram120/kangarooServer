@@ -165,18 +165,28 @@ app.post('/update_user', function (request, response,next) {
 	var userPropertiesJson = JSON.parse(userProperties);
 	var locationJson = JSON.parse(location);
 	
-	
-	//{"birthDay":"14.08.1988", "phone":"545", "about":"king!"}
-	//`update_user`(IN userd_id_In int, IN phoneIn VARCHAR(45),IN birth_dayIn date,IN aboutIn VARCHAR(45))
+	var stReturn = '';
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
 				throw err;
 			}
-			console.log("rows:" + rows[0]);
-			console.log("rows:" + rows[1]);
-			response.json({success:true, data:rows[0] });
+			stReturn  = stReturn + '"update_user": "true" ,';
 		});
+		
+	console.log('call add_location( ' + userId + ' , ' + locationJson['country'] + ', ' + locationJson['city'] + ', ' + locationJson['street'] +  ', ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')');
+	//`add_location`(IN user_IdIn int, IN countryIn VARCHAR(45), IN cityIn VARCHAR(45),IN streetIn VARCHAR(45), IN radiusIn VARCHAR(45), IN xIn VARCHAR(45), IN yIn VARCHAR(45))
+	connectDatabase().query('call add_location( ' + userId + ' , ' + locationJson['country'] + ', ' + locationJson['city'] + ', ' + locationJson['street'] +  ', ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')', function(err, rows, fields) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			
+			stReturn  = stReturn + '"add_location": "true" ';
+		});
+		
+	console.log("update_user[response] - " + stReturn);
+	response.json({success:true, data:stReturn });
 });
 
 
