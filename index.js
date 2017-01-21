@@ -179,7 +179,7 @@ console.log('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] 
 		});
 	
 	
-	
+	/*
 	client.connect(dbConnUrl, function(err, db) {
 	  if (err) throw err;
 
