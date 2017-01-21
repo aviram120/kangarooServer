@@ -158,10 +158,12 @@ app.get('/getUser', function (request, response,next) {
 app.post('/update_user', function (request, response,next) {
 	//add user to mongoDB
 	var userId = request.body.userId;
-	var user_properties = request.body.userProperties;
+	var userProperties = request.body.userProperties;
 	var location = request.body.location;
 	
-	console.log("update_user[request] - userId:" + userId + ",user_properties:" +  user_properties + ",location: " + location);
+	console.log("update_user[request] - userId:" + userId + ",userProperties:" +  userProperties + ",location: " + location);
+	var userPropertiesJson = JSON.parse(userProperties);
+	console.log("bd JSON:" + userPropertiesJson['bd']);
 	
 	/*
 	//`update_user`(IN userd_id_In int, IN phoneIn VARCHAR(45),IN birth_dayIn date,IN aboutIn VARCHAR(45))
