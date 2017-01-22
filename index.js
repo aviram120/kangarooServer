@@ -174,6 +174,10 @@ app.post('/update_user', function (request, response,next) {
 		});
 	stReturn  = 'update_user: true, ';
 	
+	console.log("length:"+locationJson.length);
+	console.log("[1]:"+locationJson[1].['city']);
+	console.log("[1]:"+locationJson[2].['city']);
+	/*
 	connectDatabase().query('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')', function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
@@ -181,7 +185,7 @@ app.post('/update_user', function (request, response,next) {
 			}
 		});
 	stReturn  = stReturn + 'add_location : true';	
-	
+	*/
 	console.log("update_user[response]:" + stReturn);
 	response.json({success:true, data:stReturn });
 });
