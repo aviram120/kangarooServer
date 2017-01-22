@@ -12,6 +12,8 @@ var client = require ('mongodb').MongoClient
 var dbConnUrl = process.env.MONGODB_URI
 var mysqlConnector;
 
+// parse various different custom JSON types as JSON
+app.use(bodyParser.json({ type: 'application/*+json' }))
  
 //for mysql connect
 var settings = {
