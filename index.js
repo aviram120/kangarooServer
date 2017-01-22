@@ -162,13 +162,13 @@ app.post('/update_user', function (request, response,next) {
 	var location = request.body.location;
 	
 	console.log("update_user[request] - userId:" + userId + ",userProperties:" +  userProperties + ",location: " + location);
-	//var userPropertiesJson = JSON.parse(userProperties);
+	var userPropertiesJson = JSON.parse(userProperties);
 	//var locationJstr = JSON.stringify(location);
 	//var locationJson = JSON.parse(location);
 	
 var arr = [{"country":"ישראל", "city":"tel aviv", "street":"zhal","radius":0, "x":14.5454,"y":36.878}, {"country":"ישראל", "city":"jerusalem", "street":"inbal","radius":0, "x":20.65,"y":43.64}];
 
-var jStr = JSON.stringify(arr);
+var jStr = JSON.stringify(location));
 
 var parsedArr = JSON.parse(jStr);
 console.log(parsedArr);
