@@ -195,7 +195,7 @@ console.log('call add_location( ' + userId + ' , ' + parsedArr[0].country + ')')
 	stReturn  = stReturn + 'add_location : true';	
 	*/
 	console.log("update_user[response]:" + stReturn);
-	response.json({success:true, data:stReturn });
+	response.json({success:true, data:parsedArr[0].country });
 });
 
 
