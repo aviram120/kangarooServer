@@ -172,7 +172,7 @@ var jStr = JSON.stringify(location);
 
 var parsedArr = JSON.parse(jStr);
 console.log(parsedArr);
-console.log(parsedArr[0].street.toString());
+console.log(toString(parsedArr[0].street));
 	
 	var stReturn;
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
