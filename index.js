@@ -180,7 +180,7 @@ console.log('call add_location( ' + userId + ' , ' + parsedArr[0].country + ')')
 				console.log('error: ', err);
 				throw err;
 			}
-		});
+		}); 
 	stReturn  = 'update_user: true, ';
 
 	/*
