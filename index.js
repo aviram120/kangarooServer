@@ -163,8 +163,8 @@ app.post('/update_user', function (request, response,next) {
 	
 	console.log("update_user[request] - userId:" + userId + ",userProperties:" +  userProperties + ",location: " + location);
 	var userPropertiesJson = JSON.parse(userProperties);
-	var locationJstr = JSON.stringify(location);
-	var locationJson = JSON.parse(locationJstr);
+	//var locationJstr = JSON.stringify(location);
+	var locationJson = JSON.parse(location);
 	
 
 	console.log("parsedArr: " + locationJson);
