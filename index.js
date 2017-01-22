@@ -163,12 +163,13 @@ app.post('/update_user', function (request, response,next) {
 	
 	console.log("update_user[request] - userId:" + userId + ",userProperties:" +  userProperties + ",location: " + location);
 	var userPropertiesJson = JSON.parse(userProperties);
-	//var locationJstr = JSON.stringify(location);
-	//var locationJson = JSON.parse(locationJstr);
+	var locationJstr = JSON.stringify(location);
+	var locationJson = JSON.parse(locationJstr);
 	
-	var parsedArr = JSON.parse(JSON.stringify(location.toString()));
-	console.log("parsedArr: " + parsedArr);
-	console.log("parsedArr[0]: " + parsedArr[0]);
+
+	console.log("parsedArr: " + locationJson);
+	console.log("parsedArr[0]: " + locationJson[0]);
+	
 	var stReturn;
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
 			if (err) {
