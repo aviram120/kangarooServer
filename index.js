@@ -167,7 +167,7 @@ app.post('/update_user', function (request, response,next) {
 	//var locationJson = JSON.parse(locationJstr);
 	
 	var parsedArr = JSON.parse(JSON.stringify(location.toString()));
-	console.log(parsedArr[0]);
+	console.log(parsedArr);
 	
 	var stReturn;
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
