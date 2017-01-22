@@ -167,8 +167,8 @@ app.post('/update_user', function (request, response,next) {
 	//var locationJson = JSON.parse(locationJstr);
 	
 	var parsedArr = JSON.parse(JSON.stringify(location.toString()));
-	console.log(parsedArr);
-	
+	console.log("parsedArr: " + parsedArr);
+	console.log("parsedArr[0]: " + parsedArr[0]);
 	var stReturn;
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
 			if (err) {
@@ -177,10 +177,7 @@ app.post('/update_user', function (request, response,next) {
 			}
 		});
 	stReturn  = 'update_user: true, ';
-	/*
-	console.log("length:"+locationJson.length);
-	console.log("[0]:"+locationJson[0]);
-	console.log("[1]:"+locationJson[1]);*/
+
 	/*
 	connectDatabase().query('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')', function(err, rows, fields) {
 			if (err) {
