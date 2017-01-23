@@ -169,10 +169,10 @@ app.post('/update_user', function (request, response,next) {
 	//var locationJson = JSON.parse(location);
 	
 var arr2 = '{"country":["il", "usa"],"city":["tel aviv", "ny"],"street":["zhal", "inbal"]}';
-console.log("arr2: " + arr2);
+console.log("location: " + location);
 
 var re = /\0/g;
-var str = arr2.toString().replace(re, "");
+var str = location.toString().replace(re, "");
 console.log("str:" + str);
 var  parsedArr = JSON.parse(str);
 console.log("parsedArr:" + parsedArr);
