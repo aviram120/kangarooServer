@@ -171,15 +171,13 @@ app.post('/update_user', function (request, response,next) {
 var arr = [{"country":"ישראל", "city":"tel aviv", "street":"zhal","radius":0, "x":14.5454,"y":36.878}, {"country":"ישראל", "city":"jerusalem", "street":"inbal","radius":0, "x":20.65,"y":43.64}];
 
 var arr2 = {
-	"loction":{
 		"country":["il", "usa"],
 		"city":["tel aviv", "ny"],
-		"street":["zhal", "inbal"]
-	}
+		"street":["zhal", "inbal"]	
 };
-var jStr = JSON.stringify(arr2);
+//var jStr = JSON.stringify(arr2);
 
-var parsedArr = JSON.parse(jStr);
+var parsedArr = JSON.parse(arr2);
 console.log(parsedArr);
 console.log('call add_location( ' + userId + ' , ' + parsedArr.country[0] + ')');
 	
