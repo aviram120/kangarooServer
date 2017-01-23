@@ -186,16 +186,18 @@ app.post('/update_user', function (request, response,next) {
 	
 	for (var i = 0; i < locationJson.length; i++)
 	{
-			console.log('add_location' + userId + ' , "' + locationJson.country[i] + '", "' + locationJson.city[i] + '", "' + locationJson.street[i] + '", ' + locationJson.radius[i] + ', ' + locationJson.x[i] +  ', ' + locationJson.y[i]  + ')' );
-	}
-	/*
-	connectDatabase().query('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')', function(err, rows, fields) {
+		var query = 'add_location(' + userId + ' , "' + locationJson.country[i] + '", "' + locationJson.city[i] + '", "' + locationJson.street[i] + '", ' + locationJson.radius[i] + ', ' + locationJson.x[i] +  ', ' + locationJson.y[i]  + ')' ;
+		console.log("query:" + query);
+		connectDatabase().query(query, function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
 				throw err;
 			}
 		});
-	stReturn  = stReturn + 'add_location : true';	
+		stReturn  = stReturn + 'add_location in i=' + i + ' : true.';	
+	}
+	/*
+	
 	*/
 	console.log("update_user[response]:" + stReturn);
 	response.json({success:true, data:stReturn });
