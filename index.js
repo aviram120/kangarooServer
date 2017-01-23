@@ -168,8 +168,6 @@ app.post('/update_user', function (request, response,next) {
 	//var locationJstr = JSON.stringify(location);
 	//var locationJson = JSON.parse(location);
 	
-var arr = [{"country":"ישראל", "city":"tel aviv", "street":"zhal","radius":0, "x":14.5454,"y":36.878}, {"country":"ישראל", "city":"jerusalem", "street":"inbal","radius":0, "x":20.65,"y":43.64}];
-
 var arr2 = {
 		"country":["il", "usa"],
 		"city":["tel aviv", "ny"],
@@ -178,8 +176,9 @@ var arr2 = {
 var jStr = JSON.stringify(arr2);
 
 var parsedArr = JSON.parse(jStr);
-console.log(parsedArr);
+
 console.log('call add_location( ' + userId + ' , ' + parsedArr.country[0] + ')');
+console.log("sys: " + parsedArr.country[0] + parsedArr.country[1] + parsedArr.street[1] );
 	
 	var stReturn;
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
