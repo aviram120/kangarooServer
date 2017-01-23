@@ -177,6 +177,7 @@ var jStr = JSON.stringify(location);
 
 var parsedArr = JSON.parse(jStr);
 
+console.log("sys180: " + parsedArr);
 console.log('call add_location( ' + userId + ' , ' + parsedArr.country[0] + ')');
 console.log("sys: " + parsedArr.country[0] + parsedArr.country[1] + parsedArr.street[1] );
 	
