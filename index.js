@@ -162,38 +162,25 @@ app.post('/update_user', function (request, response,next) {
 	var userId = request.body.userId;
 	var userProperties = request.body.userProperties;
 	var location = request.body.location;
+	var stReturn;
+	
 	
 	console.log("update_user[request] - userId:" + userId + ",userProperties:" +  userProperties + ",location: " + location);
-	var userPropertiesJson = JSON.parse(userProperties);
-	//var locationJstr = JSON.stringify(location);
-	//var locationJson = JSON.parse(location);
 	
-var arr2 = '{"country":["il", "usa"],"city":["tel aviv", "ny"],"street":["zhal", "inbal"]}';
-console.log("location: " + location);
-
-var re = /\0/g;
-var str = location.toString().replace(re, "");
-console.log("str:" + str);
-var  parsedArr = JSON.parse(str);
-console.log("parsedArr:" + parsedArr);
-
-//var jStr = JSON.stringify(arr2.toString());
-//console.log("jStr: " + jStr);
-//var parsedArr = JSON.parse(arr2);
-
-//console.log("parsedArr: " + parsedArr);
-console.log('call add_location( ' + userId + ' , ' + parsedArr.country + ')');
-console.log("sys: " + parsedArr.country[0] + parsedArr.country[1] + parsedArr.street[1] );
-	
-	var stReturn;
+	var userPropertiesJson = JSON.parse(userProperties);	
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
 				throw err;
 			}
 		});  
-	stReturn  = 'update_user: true, ';
+	stReturn  = 'update_user: true. ';
 
+	
+	var re = /\0/g;
+	var locationStr = location.toString().replace(re, "");
+	var  locationJson = JSON.parse(locationStr);
+	console.log("length:" + locationJson.length);
 	/*
 	connectDatabase().query('call add_location( ' + userId + ' , "' + locationJson['country'] + '", "' + locationJson['city'] + '", "' + locationJson['street'] +  '", ' + locationJson['radius'] +  ', ' + locationJson['x'] +  ', ' + locationJson['y'] + ')', function(err, rows, fields) {
 			if (err) {
