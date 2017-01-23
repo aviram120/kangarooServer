@@ -175,9 +175,9 @@ var arr2 = {
 		"city":["tel aviv", "ny"],
 		"street":["zhal", "inbal"]	
 };
-//var jStr = JSON.stringify(arr2);
+var jStr = JSON.stringify(arr2);
 
-var parsedArr = JSON.parse(arr2);
+var parsedArr = JSON.parse(jStr);
 console.log(parsedArr);
 console.log('call add_location( ' + userId + ' , ' + parsedArr.country[0] + ')');
 	
