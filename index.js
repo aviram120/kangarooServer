@@ -175,7 +175,7 @@ var re = /\0/g;
 var str = arr2.toString().replace(re, "");
 console.log("str:" + str);
 var  parsedArr = JSON.parse(str);
-console.log("parsedArr:" + pp);
+console.log("parsedArr:" + parsedArr);
 
 //var jStr = JSON.stringify(arr2.toString());
 //console.log("jStr: " + jStr);
