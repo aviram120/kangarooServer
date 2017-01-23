@@ -185,7 +185,7 @@ console.log("sys: " + parsedArr.country[0] + parsedArr.country[1] + parsedArr.st
 				console.log('error: ', err);
 				throw err;
 			}
-		}); 
+		});  
 	stReturn  = 'update_user: true, ';
 
 	/*
