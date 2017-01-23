@@ -167,13 +167,9 @@ app.post('/update_user', function (request, response,next) {
 	var userPropertiesJson = JSON.parse(userProperties);
 	//var locationJstr = JSON.stringify(location);
 	//var locationJson = JSON.parse(location);
-/*	
-var arr2 = {
-		"country":["il", "usa"],
-		"city":["tel aviv", "ny"],
-		"street":["zhal", "inbal"]	
-};*/
-var jStr = JSON.stringify(location);
+	
+var arr2 = "{'country':['il', 'usa'],'city':['tel aviv', 'ny'],'street':['zhal', 'inbal']}";
+var jStr = JSON.stringify(arr2);
 
 var parsedArr = JSON.parse(jStr);
 
