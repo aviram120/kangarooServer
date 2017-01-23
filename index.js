@@ -186,7 +186,7 @@ app.post('/update_user', function (request, response,next) {
 	
 	for (var i = 0; i < locationJson.length; i++)
 	{
-		var query = 'add_location(' + userId + ' , "' + locationJson.country[i] + '", "' + locationJson.city[i] + '", "' + locationJson.street[i] + '", ' + locationJson.radius[i] + ', ' + locationJson.x[i] +  ', ' + locationJson.y[i]  + ')' ;
+		var query = 'call add_location(' + userId + ' , "' + locationJson.country[i] + '", "' + locationJson.city[i] + '", "' + locationJson.street[i] + '", ' + locationJson.radius[i] + ', ' + locationJson.x[i] +  ', ' + locationJson.y[i]  + ')' ;
 		console.log("query:" + query);
 		connectDatabase().query(query, function(err, rows, fields) {
 			if (err) {
