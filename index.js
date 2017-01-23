@@ -170,11 +170,18 @@ app.post('/update_user', function (request, response,next) {
 	
 var arr = [{"country":"ישראל", "city":"tel aviv", "street":"zhal","radius":0, "x":14.5454,"y":36.878}, {"country":"ישראל", "city":"jerusalem", "street":"inbal","radius":0, "x":20.65,"y":43.64}];
 
-var jStr = JSON.stringify(location.toString());
+var arr2 = {
+	"loction":{
+		"country":["il", "usa"],
+		"city":["tel aviv", "ny"],
+		"street":["zhal", "inbal"]
+	}
+};
+var jStr = JSON.stringify(arr2);
 
 var parsedArr = JSON.parse(jStr);
 console.log(parsedArr);
-console.log('call add_location( ' + userId + ' , ' + parsedArr[0].country + ')');
+console.log('call add_location( ' + userId + ' , ' + parsedArr.country[0] + ')');
 	
 	var stReturn;
 	connectDatabase().query('call update_user( ' + userId + ' , ' + userPropertiesJson['phone'] + ', "' + userPropertiesJson['birthDay'] + '", "' + userPropertiesJson['about'] + '")', function(err, rows, fields) {
@@ -195,7 +202,7 @@ console.log('call add_location( ' + userId + ' , ' + parsedArr[0].country + ')')
 	stReturn  = stReturn + 'add_location : true';	
 	*/
 	console.log("update_user[response]:" + stReturn);
-	response.json({success:true, data:parsedArr[0].country });
+	response.json({success:true, data:stReturn });
 });
 
 
