@@ -172,9 +172,10 @@ var arr2 = "{'country':['il', 'usa'],'city':['tel aviv', 'ny'],'street':['zhal',
 console.log("arr2: " + arr2);
 //var str = arr2.toString().slice(0, - 1);
 //console.log("str: " + str);
-var jStr = JSON.stringify(arr2.toString());
-console.log("jStr: " + jStr);
-var parsedArr = JSON.parse(jStr);
+//var jStr = JSON.stringify(arr2.toString());
+//console.log("jStr: " + jStr);
+
+var parsedArr = JSON.parse(arr2);
 
 console.log("parsedArr: " + parsedArr);
 console.log('call add_location( ' + userId + ' , ' + parsedArr.country + ')');
