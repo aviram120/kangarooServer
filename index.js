@@ -70,7 +70,7 @@ app.get('/', function(request, response) {
 });
 app.get('/test', function(request, response) {
   response.json('good11');
-});
+}); 
 
 app.get('/getMysql', function (request, response) {
 	connectDatabase().query('call GetAllUserd()', function(err, rows, fields) {
@@ -181,9 +181,7 @@ app.post('/update_user', function (request, response,next) {
 	var locationStr = location.toString().replace(re, "");
 	var  locationJson = JSON.parse(locationStr);
 	console.log("length:" + locationJson.length);
-	//{"length":2,"country":["il", "ny"],"city":["tel aviv", "jerusalem"],"street":["zhal", "inbal"],"radius":[0, "3"],"x":[14.5454, 35.67],"y":[10.6356, 43.54]}
-	//`add_location`(IN user_IdIn int, IN countryIn VARCHAR(45), IN cityIn VARCHAR(45),IN streetIn VARCHAR(45), IN radiusIn VARCHAR(45), IN xIn VARCHAR(45), IN yIn VARCHAR(45))
-	
+
 	for (var i = 0; i < locationJson.length; i++)
 	{
 		var query = 'call add_location(' + userId + ' , "' + locationJson.country[i] + '", "' + locationJson.city[i] + '", "' + locationJson.street[i] + '", ' + locationJson.radius[i] + ', ' + locationJson.x[i] +  ', ' + locationJson.y[i]  + ')' ;
@@ -196,9 +194,7 @@ app.post('/update_user', function (request, response,next) {
 		});
 		stReturn  = stReturn + 'add_location in i=' + i + ' : true.';	
 	}
-	/*
-	
-	*/
+
 	console.log("update_user[response]:" + stReturn);
 	response.json({success:true, data:stReturn });
 });
