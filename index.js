@@ -172,15 +172,17 @@ app.get('/login', function (request, response,next) {
 				throw err;
 			}
 			var stResp;
+			var status = true;
 			if (rows[0].length != 0) 
 			{
 				stResp = rows[0];
 			}
 			else
 			{
+				status = false;
 				stResp = "Invalid email or password";
 			}
-			response.json({success:true, data:stResp });
+			response.json({success:status, data:stResp });
 		});
 		
 	//console.log("login[response] - " + stResp);	
