@@ -17,6 +17,14 @@ app.use(bodyParser.json({ type: 'application/*+json' }))
  
 //for mysql connect
 var settings = {
+	  host     : 'mysql1418.opentransfer.com',
+	  user     : 'AAAljt4_kangaroo',
+	  password : 'MuieMa123!',
+	  database : 'AAAljt4_kangaroo',
+      insecureAuth: true
+	};
+	
+var settings2 = {
 	  host     : 'us-cdbr-iron-east-04.cleardb.net',
 	  user     : 'bc0c220fd37c24',
 	  password : 'd8f813ab',
@@ -68,94 +76,41 @@ app.use(function(req, res, next) {
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
-app.get('/test', function(request, response) {
-  response.json('good11');
-}); 
 
 app.get('/getMysql', function (request, response) {
-	connectDatabase().query('call GetAllUserd()', function(err, rows, fields) {
+	connectDatabase().query('call get_all_users()', function(err, rows, fields) {
 			if (err) {
 				console.log('error: ', err);
 				throw err;
 			}
 			response.json({success:true, data:rows[0] });
-		});
-	
-	//mysqlConnector.release(); 
+		}); 
 });
 
+/*****************************USER - Function*****************************/
 app.post('/addUser', function (request, response,next) {
-	//add user to mongoDB
-	var userName = request.body.userName;
+	
+	var mail = request.body.mail;
 	var password = request.body.password;
 	var firstName = request.body.firstName;
 	var lastName = request.body.lastName;
-	var birthday = request.body.birthday;
-	var phoneNum = request.body.phoneNum;
-	var mail = request.body.mail;
+	var userType = request.body.userType;
 	
-	console.log("addUser[request] - userName:" + userName + ",password:" +  password + ",firstName: " + firstName + ",lastName: " + lastName + ",birthday: " + birthday + ",phoneNum: " + phoneNum + ", mail: " + mail);
+	console.log("addUser[request] - mail:" + mail + ",password:" +  password + ",firstName: " + firstName + ",lastName: " + lastName + ",userType: " + userType);
 	
-	client.connect(dbConnUrl, function(err, db) {
-	  if (err) throw err;
-
-	  //simple json record
-		var document = { "UserName" : userName, "Password" : password , "FirstName" : firstName , "LastName" : lastName, "Birthday" : birthday,  "PhoneNum" : phoneNum , "Mail" : mail ,"Timestamp" : new Date().getTime() };
-	  
-		//insert record
-		db.collection('users').insert(document, function(err, records) {
-			var stResp;
-			try 
-			{
-				response.json({success:true, data:'id: ' +document._id}); 
-				stResp = "id in DB: " + document._id;
-			}
-			catch (e) {
-				response.json({success:false, data:err});	
-				stResp = "ERROR: " + err;
+	var query = "call add_new_user('" + mail + "','" + password + "','" + firstName + "','" + lastName + "'," + userType + ")";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
 			}
 			
-			console.log("addUser[response] - " + stResp);
+			console.log('rows: ' + rows.insertId);
+			response.json({success:true, data:rows.insertId });
 		});
-	});
+	//console.log("addUser[response] - " + stResp);		
 });
-
-app.get('/getUser', function (request, response,next) {
-	//get  user from mongoDB
-	
-	var userName = request.query.userName;
-	var password = request.query.password;
-	
-	if (userName == null || password == null)
-	{
-		response.json({success:false, data:"userName or password are missing" });
-		return;
-	}
-	console.log("getUser[request] - userName:" + userName + ",password:" +  password);
-	
-	var query = { 'UserName' : userName, 'Password' : password  };
-
-	client.connect(dbConnUrl, function(err, db) {
-		db.collection('users', function(err, collection) {
-
-			collection.findOne(query, function(err, item) {
-				var stResp;
-				if (item != null)
-				{
-					response.json({success:true, data:item });
-					stResp = JSON.stringify(item);;
-				}
-				else
-				{
-					response.json({success:false, data:"user not found in db" });
-					stResp = "user not found in db";
-				}
-				console.log("getUser[response] - " + stResp);
-			});
-		});
-	});
-});
-
 
 app.post('/update_user', function (request, response,next) {
 	//add user to mongoDB
@@ -163,7 +118,6 @@ app.post('/update_user', function (request, response,next) {
 	var userProperties = request.body.userProperties;
 	var location = request.body.location;
 	var stReturn;
-	
 	
 	console.log("update_user[request] - userId:" + userId + ",userProperties:" +  userProperties + ",location: " + location);
 	
@@ -176,11 +130,9 @@ app.post('/update_user', function (request, response,next) {
 		});  
 	stReturn  = 'update_user: true. ';
 
-	
 	var re = /\0/g;
 	var locationStr = location.toString().replace(re, "");
-	var  locationJson = JSON.parse(locationStr);
-	console.log("length:" + locationJson.length);
+	var locationJson = JSON.parse(locationStr);
 
 	for (var i = 0; i < locationJson.length; i++)
 	{
@@ -199,10 +151,249 @@ app.post('/update_user', function (request, response,next) {
 	response.json({success:true, data:stReturn });
 });
 
+app.get('/login', function (request, response,next) {
+	//get  user from mongoDB
+	
+	var mail = request.query.mail;
+	var password = request.query.password;
+	
+	if (mail == null || password == null)
+	{
+		response.json({success:false, data:"mail or password are missing" });
+		return;
+	}
+	console.log("login[request] - mail:" + mail + ",password:" +  password);
+	
+	var query = "call get_user_by_mail_pass('" + mail + "','" + password + "')"
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			var stResp;
+			if (rows[0].length != 0) 
+			{
+				stResp = rows[0];
+			}
+			else
+			{
+				stResp = "Invalid email or password";
+			}
+			response.json({success:true, data:stResp });
+		});
+		
+	//console.log("login[response] - " + stResp);	
+});
 
+/*****************************additional_feature - Function*****************************/
+app.post('/addAdditionalFeature', function (request, response,next) {
+	//add user to mongoDB
+	var userId = request.body.userId;
+	var value = request.body.value;
+	
+	console.log("addAdditionalFeature[request] - userId:" + userId + ",value:" +  value );
+	
+	var query = "call add_additional_feature('" + userId + "','" + value + "')";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			var stResp;
+			if (rows.affectedRows == 1) 
+			{
+				stResp = "add:true";
+			}
+			else
+			{
+				stResp = "add:false";
+			}
+			
+			response.json({success:true, data:stResp });
+		});
+	console.log("addAdditionalFeature[response] - " + stResp);		
+});
+app.get('/getAdditionalFeatureByUserId', function (request, response,next) {
+	var userId = request.query.userId;
+	
+	console.log("getAdditionalFeatureByUserId[request] - userId:" + userId );
+	
+	var query = "call get_additional_feature_by_userId('" + userId + "')";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			
+			var stResp;
 
+			response.json({success:true, data:rows[0]});
+		});
+	//console.log("getAdditionalFeatureByUserId[response] - " + stResp);		
+});
+
+/*****************************review - Function*****************************/
+app.post('/addReview', function (request, response,next) {
+	//add user to mongoDB
+	var fromId = request.body.fromId;
+	var toId = request.body.toId;
+	var text = request.body.text;
+	var stars = request.body.stars;
+	
+	console.log("addReview[request] - fromId:" + fromId + ",toId:" +  toId + ",text:" +  text + ",stars:" +  stars);
+	var query = "call add_review('" + fromId + "','" + toId + "','" + text + "','" + stars + "')";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			var stResp;
+			if (rows.affectedRows == 1) 
+			{
+				stResp = "add:true";
+			}
+			else
+			{
+				stResp = "add:false";
+			}
+			
+			response.json({success:true, data:stResp });
+		});
+	//console.log("addReview[response] - " + stResp);		
+});
+app.post('/editReview', function (request, response,next) {
+	//add user to mongoDB
+	var reviewId = request.body.reviewId;
+	var text = request.body.text;
+	var stars = request.body.stars;
+	
+	console.log("editReview[request] - reviewId:" + reviewId + ",text:" +  text + ",stars:" +  stars );
+	var query = "call edit_review('" + reviewId + "','" + text + "','" + stars + "')";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			var stResp;
+			if (rows.affectedRows == 1) 
+			{
+				stResp = "add:true";
+			}
+			else
+			{
+				stResp = "add:false";
+			}
+			
+			response.json({success:true, data:stResp });
+		});
+	//console.log("editReview[response] - " + stResp);		
+});
+app.get('/getReviewByUserId', function (request, response,next) {
+	var userId = request.query.userId;
+	
+	console.log("getReviewByUserId[request] - userId:" + userId );
+	var query = "call get_review_by_userId('" + userId + "')";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			
+			var stResp;
+
+			response.json({success:true, data:rows[0]});
+		});
+	//console.log("getAdditionalFeatureByUserId[response] - " + stResp);		
+});
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
+/*****************************event - Function*****************************/
+app.post('/addEvent', function (request, response,next) {
+	var parentId = request.body.parentId;
+	var sitterId = request.body.sitterId;
+	var startTime = request.body.startTime;
+	var endTime = request.body.endTime;
+	var status = request.body.status;
+	
+	var car = request.body.car;
+	var sign_language = request.body.sign_language;
+	var special_needs = request.body.special_needs;
+	var drivg_licence = request.body.drivg_licence;
+	var home_work = request.body.home_work;
+	
+	var coocking = request.body.coocking;
+	var job_type = request.body.job_type;
+	var hourly_wage = request.body.hourly_wage;
+	var car_wage = request.body.car_wage;
+	var drivg_licence_wage = request.body.drivg_licence_wage;
+	
+	var special_needs_wage = request.body.special_needs_wage;
+	
+	
+	console.log("addEvent[request] - parentId:" + parentId + ",sitterId:" +  sitterId + ",startTime:" +  startTime  + ",endTime:" +  endTime + ",status:" +  status +
+	", car:" + car + ",sign_language:" +  sign_language + ",special_needs:" +  special_needs  + ",drivg_licence:" +  drivg_licence + ",home_work:" +  home_work +
+	", coocking:" + coocking + ",job_type:" +  job_type + ",hourly_wage:" +  hourly_wage  + ",car_wage:" +  car_wage + ",drivg_licence_wage:" +  drivg_licence_wage +
+	",special_needs_wage:" +  special_needs_wage);
+	
+	var query = "call add_event('" + parentId + "','" + sitterId + "','" + startTime + "','" + endTime + "','" + status + 
+	"','" + car + "','" + sign_language + "','" + special_needs + "','" + drivg_licence + "','" + home_work + 
+	"','" + coocking + "','" + job_type + "','" + hourly_wage + "','" + car_wage + "','" + drivg_licence_wage + 
+	"','" + special_needs_wage + 	
+	"')";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			var stResp;
+			if (rows.affectedRows == 1) 
+			{
+				stResp = "add:true";
+			}
+			else
+			{
+				stResp = "add:false";
+			}
+			
+			response.json({success:true, data:stResp });
+		});
+	//console.log("editReview[response] - " + stResp);		
+});
 
+app.post('/changeStatusEvent', function (request, response,next) {
+	//add user to mongoDB
+	var eventId = request.body.eventId;
+	var status = request.body.status;
+	
+	//call change_status_event(1,0)
+	console.log("changeStatusEvent[request] - eventId:" + eventId + ",status:" +  status );
+	var query = "call change_status_event('" + eventId + "','" + status + "')";
+	console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			var stResp;
+			if (rows.affectedRows == 1) 
+			{
+				stResp = "add:true";
+			}
+			else
+			{
+				stResp = "add:false";
+			}
+			
+			response.json({success:true, data:stResp });
+		});
+	//console.log("editReview[response] - " + stResp);		
+});
