@@ -8,6 +8,7 @@ var mysql = require('mysql');
 var util = require('util')
 var url = require('url')
 var client = require ('mongodb').MongoClient
+var async = require('async');
 
 var dbConnUrl = process.env.MONGODB_URI
 var mysqlConnector;
@@ -313,9 +314,7 @@ app.get('/getReviewByUserId', function (request, response,next) {
 		});
 	//console.log("getAdditionalFeatureByUserId[response] - " + stResp);		
 });
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+
 
 /*****************************event - Function*****************************/
 app.post('/addEvent', function (request, response,next) {
@@ -398,4 +397,84 @@ app.post('/changeStatusEvent', function (request, response,next) {
 			response.json({success:true, data:stResp });
 		});
 	//console.log("editReview[response] - " + stResp);		
+});
+
+
+
+
+app.get('/test', function (request, response,next) {
+		async.series([
+			function(callback){
+				// do some stuff ...
+				
+				var stResp;
+				var query = "call get_user_by_mail_pass('rest@mail.com','123')"
+				console.log('query: ' + query);
+				connectDatabase().query(query, function(err, rows) {
+				if (err) {
+					console.log('error: ', err);
+					throw err;
+				}
+				
+				//var status = true;
+				if (rows[0].length != 0) 
+				{
+					stResp = rows[0];
+					console.log("stResp - " + stResp)
+				}
+				else
+				{
+					status = false;
+					stResp = "Invalid email or password";
+				}
+				var stdata = JSON.stringify({user:stResp});
+				var sdata = JSON.parse(stdata);
+
+				callback(null, sdata);
+				//response.json({success:status, data:stResp });
+				});
+				
+				
+			},
+			function(callback){
+				// do some more stuff ...
+				
+				var query = "call get_review_by_userId('26')";
+				connectDatabase().query(query, function(err, rows) {
+					if (err) {
+						console.log('error: ', err);
+						throw err;
+					}
+					console.log("results review - " + rows[0]);	
+					var stdata = JSON.stringify({review:rows[0]});
+					var sdata = JSON.parse(stdata);
+					//var st2 = json.parse({review:rows[0]});
+					callback(null,  sdata);
+				});
+			},
+		],
+		// optional callback
+		function(err, results){
+			// results is now equal to ['one', 'two']
+			console.log("results - " + results);	
+			response.json({success:true, data:results });
+		});
+	//console.log("getAdditionalFeatureByUserId[response] - " + stResp);		
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
