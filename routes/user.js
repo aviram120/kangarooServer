@@ -11,7 +11,7 @@ app.post('/user/addUser', function (request, response,next) {
 	var lastName = request.body.lastName;
 	var userType = request.body.userType;
 	
-	console.log("addUser[request] - mail:" + mail + ",password:" +  password + ",firstName: " + firstName + ",lastName: " + lastName + ",userType: " + userType);
+	console.log("/user/addUser[request] - mail:" + mail + ",password:" +  password + ",firstName: " + firstName + ",lastName: " + lastName + ",userType: " + userType);
 	
 	var query = "call add_new_user('" + mail + "','" + password + "','" + firstName + "','" + lastName + "'," + userType + ")";
 	console.log('query: ' + query);
@@ -20,8 +20,8 @@ app.post('/user/addUser', function (request, response,next) {
 				console.log('error: ', err);
 				throw err;
 			}
-			
-			console.log('rows: ' + rows.insertId);
+			//"/user/addUser[response] - " +
+			console.log(rows);
 			response.json({success:true, data:rows.insertId });
 		});
 	//console.log("addUser[response] - " + stResp);		
@@ -95,7 +95,8 @@ app.get('/user/login', function (request, response,next) {
 				status = false;
 				stResp = "Invalid email or password";
 			}
-			//console.log("/user/login[response] - " + stResp);
+			//
+			console.log("/user/login[response] - " + JSON.stringify(stResp[0]));
 			response.json({success:status, data:stResp });
 		});
 		
@@ -106,7 +107,7 @@ app.get('/user/login', function (request, response,next) {
 	
 	
 	
-	
+	 //RowDataPacket
 	
 	
 	
