@@ -10,13 +10,6 @@ var async = require('async');
 
 var dbConnUrl = process.env.MONGODB_URI
 
-//routes
-require("./routes/dbMysql");
-require("./routes/user")(app);
-require("./routes/additional_feature")(app);
-require("./routes/review")(app);
-require("./routes/event")(app);
-
 
 // parse various different custom JSON types as JSON
 app.use(bodyParser.json({ type: 'application/*+json' }))
@@ -44,7 +37,12 @@ app.use(function(req, res, next) {
         next();
     }
 });
-
+//routes
+require("./routes/dbMysql");
+require("./routes/user")(app);
+require("./routes/additional_feature")(app);
+require("./routes/review")(app);
+require("./routes/event")(app);
 
 app.get('/', function(request, response) {
   response.render('pages/index');
