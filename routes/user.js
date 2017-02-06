@@ -11,6 +11,14 @@ app.post('/user/addUser', function (request, response,next) {
 	var lastName = request.body.lastName;
 	var userType = request.body.userType;
 	
+	if (mail == null || password == null || firstName == null || lastName == null || userType == null)
+	{
+		var errMsg = "on of the parameter is null";
+		console.log(errMsg);
+		response.json({success:false, data:errMsg });
+		return;
+	}
+	
 	console.log("/user/addUser[request] - mail:" + mail + ",password:" +  password + ",firstName: " + firstName + ",lastName: " + lastName + ",userType: " + userType);
 	
 	var query = "call add_new_user('" + mail + "','" + password + "','" + firstName + "','" + lastName + "'," + userType + ")";
@@ -107,7 +115,7 @@ app.get('/user/login', function (request, response,next) {
 	
 	
 	
-	 //RowDataPacket
+	
 	
 	
 	

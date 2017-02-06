@@ -83,7 +83,43 @@ app.post('/event/changeStatusEvent', function (request, response,next) {
 		});
 	//console.log("editReview[response] - " + stResp);		
 });
+app.get('/event/getEventByUsedid', function (request, response,next) {
+	
+	var userId = request.query.userId;
 
+	
+	if (userId == null)
+	{
+		response.json({success:false, data:"mail or password are missing" });
+		return;
+	}
+	console.log("/event/getEventByUsedid[request] - userId:" + userId );
+	
+	var query = "call get_event_by_userId('" + userId + "')"
+	//console.log('query: ' + query);
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			var stResp;
+			var status = true;
+			if (rows[0].length != 0) 
+			{
+				stResp = rows[0];
+			}
+			else
+			{
+				//status = true;
+				stResp = "no data to this userid";
+			}
+			
+			console.log("/event/getEventByUsedid[response] - " + JSON.stringify(stResp[0]));
+			response.json({success:status, data:stResp });
+		});
+		
+		
+});
 	
 	
 	
