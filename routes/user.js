@@ -13,7 +13,7 @@ app.post('/user/addUser', function (request, response,next) {
 	
 	if (mail == null || password == null || firstName == null || lastName == null || userType == null)
 	{
-		var errMsg = "on of the parameter is null";
+		var errMsg = "on of the parameters is null";
 		console.log(errMsg);
 		response.json({success:false, data:errMsg });
 		return;
@@ -97,6 +97,45 @@ app.get('/user/login', function (request, response,next) {
 			if (rows[0].length != 0) 
 			{
 				stResp = rows[0];
+				
+				 //convert the responce from db to user
+				var userArray = {"user":{ "id":  stResp[0].id
+				,"mail": stResp[0].mail
+				,"first_name": stResp[0].first_name 
+				,"last_name": stResp[0].last_name 
+				,"phone_num": stResp[0].phone_num 
+				,"birth_day": stResp[0].birth_day 
+				,"about_as": stResp[0].about_as 
+				,"baby_counter": stResp[0].baby_counter 
+				,"time_created:": stResp[0].time_last_enter 
+				,"user_type": stResp[0].user_type 				
+				}};
+
+				 //convert the responce from db to array event
+				var eventArray ={ "evnets": [] };
+				for (var i = 0; i<stResp.length; i++)
+				{
+					var event = { "id_event": stResp[i].id_event
+					,"id_event": stResp[i].id_event
+					,"parent_id": stResp[i].parent_id
+					,"sitter_id": stResp[i].sitter_id
+					,"start_time": stResp[i].start_time
+					,"end_time": stResp[i].end_time
+					,"status": stResp[i].status
+					,"car": stResp[i].car
+					,"sign_language": stResp[i].sign_language
+					,"special_needs": stResp[i].special_needs
+					,"driving_licence": stResp[i].driving_licence
+					,"home_work": stResp[i].home_work
+					,"coocking": stResp[i].coocking
+					,"job_type": stResp[i].job_type
+					,"hourly_wage": stResp[i].hourly_wage
+					,"car_wage": stResp[i].car_wage
+					,"driving_licence_wage": stResp[i].driving_licence_wage
+					,"special_needs_wage": stResp[i].special_needs_wage
+					};
+					eventArray.evnets[i]=event;
+				}
 			}
 			else
 			{
@@ -104,8 +143,8 @@ app.get('/user/login', function (request, response,next) {
 				stResp = "Invalid email or password";
 			}
 			//
-			console.log("/user/login[response] - " + JSON.stringify(stResp[0]));
-			response.json({success:status, data:stResp });
+			console.log("/user/login[response] - " + JSON.stringify([userArray,eventArray]));
+			response.json({success:status, data:[userArray,eventArray] });
 		});
 		
 		
