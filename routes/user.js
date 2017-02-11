@@ -28,11 +28,17 @@ app.post('/user/addUser', function (request, response,next) {
 				console.log('error: ', err);
 				throw err;
 			}
-			//"/user/addUser[response] - " +
-			console.log(rows);
-			response.json({success:true, data:rows.insertId });
+			var status = true;
+			var stReturn = rows[0][0].resp;
+			if (stReturn == 'User exists')
+			{
+				status = false;
+			}
+			
+			console.log("/user/addUser[response]:" + stReturn);
+			response.json({success:status, data:stReturn });
 		});
-	//console.log("addUser[response] - " + stResp);		
+		
 });
 
 app.post('/user/update_user', function (request, response,next) {
