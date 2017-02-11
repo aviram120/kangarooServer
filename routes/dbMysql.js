@@ -6,7 +6,7 @@ var mysqlConnector;
     var settings = {
 	  host     : 'mysql1418.opentransfer.com',
 	  user     : 'AAAljt4_kangaroo',
-	  password : 'MuieMa123!',
+	  password : 'E3p5i!vv8!',
 	  database : 'AAAljt4_kangaroo',
       insecureAuth: true
 	};
