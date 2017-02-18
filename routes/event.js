@@ -23,9 +23,14 @@ app.post('/event/addEvent', function (request, response,next) {
 	
 	var special_needs_wage = request.body.special_needs_wage;
 	
+	var title = request.body.title;
+	var allDay = request.body.allDay;
+	var message = request.body.message;
+
+	
 	if (parentId == null || sitterId == null || startTime == null || endTime == null || status == null || car == null || sign_language == null || 
 	special_needs == null || drivg_licence == null || home_work == null || coocking == null || job_type == null || hourly_wage == null || car_wage == null
-	|| drivg_licence_wage == null || special_needs_wage == null  )
+	|| drivg_licence_wage == null || special_needs_wage == null || title == null || allDay == null || message == null )
 	{
 		var msg = "one or more params is missing";
 		response.json({success:false, data:msg });
@@ -35,12 +40,12 @@ app.post('/event/addEvent', function (request, response,next) {
 	console.log("/event/addEvent[request] - parentId:" + parentId + ",sitterId:" +  sitterId + ",startTime:" +  startTime  + ",endTime:" +  endTime + ",status:" +  status +
 	", car:" + car + ",sign_language:" +  sign_language + ",special_needs:" +  special_needs  + ",drivg_licence:" +  drivg_licence + ",home_work:" +  home_work +
 	", coocking:" + coocking + ",job_type:" +  job_type + ",hourly_wage:" +  hourly_wage  + ",car_wage:" +  car_wage + ",drivg_licence_wage:" +  drivg_licence_wage +
-	",special_needs_wage:" +  special_needs_wage);
+	",special_needs_wage:" +  special_needs_wage  +  title + ",title:"  +  allDay + ",allDay:"  +  message + ",message:");
 	
 	var query = "call add_event('" + parentId + "','" + sitterId + "','" + startTime + "','" + endTime + "','" + status + 
 	"','" + car + "','" + sign_language + "','" + special_needs + "','" + drivg_licence + "','" + home_work + 
 	"','" + coocking + "','" + job_type + "','" + hourly_wage + "','" + car_wage + "','" + drivg_licence_wage + 
-	"','" + special_needs_wage + 	
+	"','" + special_needs_wage + "','" + title + "','" + allDay + "','" + message + 	
 	"')";
 	//console.log('query: ' + query);
 	connectDatabase().query(query, function(err, rows) {
@@ -153,9 +158,13 @@ app.post('/event/updateEvent', function (request, response,next) {
 	var drivg_licence_wage = request.body.drivg_licence_wage;
 	var special_needs_wage = request.body.special_needs_wage;
 	
+	var title = request.body.title;
+	var allDay = request.body.allDay;
+	var message = request.body.message;
+	
 	if ( eventId == null || sitterId == null || startTime == null || endTime == null || status == null || car == null || sign_language == null || 
 	special_needs == null || drivg_licence == null || home_work == null || coocking == null || job_type == null || hourly_wage == null || car_wage == null
-	|| drivg_licence_wage == null || special_needs_wage == null  )
+	|| drivg_licence_wage == null || special_needs_wage == null || title == null || allDay == null || message == null   )
 	{
 		var msg = "one or more params is missing";
 		response.json({success:false, data:msg });
@@ -170,7 +179,7 @@ app.post('/event/updateEvent', function (request, response,next) {
 	var query = "call update_event('" +  sitterId + "','" + startTime + "','" + endTime + "','" + status + 
 	"','" + car + "','" + sign_language + "','" + special_needs + "','" + drivg_licence + "','" + home_work + 
 	"','" + coocking + "','" + job_type + "','" + hourly_wage + "','" + car_wage + "','" + drivg_licence_wage + 
-	"','" + special_needs_wage + "','" + eventId + 
+	"','" + special_needs_wage + "','" + eventId + "','" + title + "','" + allDay + "','" + message + 
 	"')";
 	console.log('query: ' + query);
 	connectDatabase().query(query, function(err, rows) {
