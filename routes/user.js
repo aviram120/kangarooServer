@@ -125,8 +125,13 @@ app.get('/user/login', function (request, response,next) {
 					,"id_event": stResp[i].id_event
 					,"parent_id": stResp[i].parent_id
 					,"sitter_id": stResp[i].sitter_id
-					,"start_time": stResp[i].start_time
-					,"end_time": stResp[i].end_time
+					
+					,"title": stResp[i].title
+					,"allDay": stResp[i].allDay
+					,"message": stResp[i].message
+					
+					,"startTime": stResp[i].start_time
+					,"endTime": stResp[i].end_time
 					,"status": stResp[i].status
 					,"car": stResp[i].car
 					,"sign_language": stResp[i].sign_language
