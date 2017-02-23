@@ -132,6 +132,10 @@ app.get('/user/login', function (request, response,next) {
 					
 					,"startTime": stResp[i].startTime
 					,"endTime": stResp[i].endTime
+					
+					,"startTimeSt": stResp[i].startTimeSt
+					,"endTimeSt": stResp[i].endTimeSt
+					
 					,"status": stResp[i].status
 					,"car": stResp[i].car
 					,"sign_language": stResp[i].sign_language

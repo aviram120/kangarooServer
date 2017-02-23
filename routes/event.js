@@ -3,10 +3,15 @@ require("./dbMysql")();
 module.exports = function (app) {	
 
 app.post('/event/addEvent', function (request, response,next) {
+	
 	var parentId = request.body.parentId;
 	var sitterId = request.body.sitterId;
 	var startTime = request.body.startTime;
 	var endTime = request.body.endTime;
+	
+	var startTimeSt = request.body.startTimeSt;
+	var endTimeSt = request.body.endTimeSt;
+	
 	var status = request.body.status;
 	
 	var car = request.body.car;
@@ -28,7 +33,7 @@ app.post('/event/addEvent', function (request, response,next) {
 	var message = request.body.message;
 
 	
-	if (parentId == null || sitterId == null || startTime == null || endTime == null || status == null || car == null || sign_language == null || 
+	if (parentId == null || sitterId == null || startTime == null || endTime == null || startTimeSt == null || endTimeSt == null || status == null || car == null || sign_language == null || 
 	special_needs == null || driving_licence == null || home_work == null || coocking == null || job_type == null || hourly_wage == null || car_wage == null
 	|| driving_licence_wage == null || special_needs_wage == null || title == null || allDay == null || message == null )
 	{
@@ -37,7 +42,8 @@ app.post('/event/addEvent', function (request, response,next) {
 		return;
 	}
 	
-	console.log("/event/addEvent[request] - parentId:" + parentId + ",sitterId:" +  sitterId + ",startTime:" +  startTime  + ",endTime:" +  endTime + ",status:" +  status +
+	console.log("/event/addEvent[request] - parentId:" + parentId + ",sitterId:" +  sitterId + ",startTime:" + 
+	startTime  + ",endTime:" +  endTime + ",startTimeSt:" + startTimeSt  +	",endTimeSt:" + endTimeSt  + ",status:" +  status +
 	", car:" + car + ",sign_language:" +  sign_language + ",special_needs:" +  special_needs  + ",driving_licence:" +  driving_licence + ",home_work:" +  home_work +
 	", coocking:" + coocking + ",job_type:" +  job_type + ",hourly_wage:" +  hourly_wage  + ",car_wage:" +  car_wage + ",driving_licence_wage:" +  driving_licence_wage +
 	",special_needs_wage:" +  special_needs_wage  +  title + ",title:"  +  allDay + ",allDay:"  +  message + ",message:");
@@ -45,7 +51,7 @@ app.post('/event/addEvent', function (request, response,next) {
 	var query = "call add_event('" + parentId + "','" + sitterId + "','" + startTime + "','" + endTime + "','" + status + 
 	"','" + car + "','" + sign_language + "','" + special_needs + "','" + driving_licence + "','" + home_work + 
 	"','" + coocking + "','" + job_type + "','" + hourly_wage + "','" + car_wage + "','" + driving_licence_wage + 
-	"','" + special_needs_wage + "','" + title + "','" + allDay + "','" + message + 	
+	"','" + special_needs_wage + "','" + title + "','" + allDay + "','" + message +  "','" + startTimeSt + "','" + endTimeSt +
 	"')";
 	//console.log('query: ' + query);
 	connectDatabase().query(query, function(err, rows) {
@@ -138,11 +144,15 @@ app.get('/event/getEventByUsedId', function (request, response,next) {
 		});
 });
 app.post('/event/updateEvent', function (request, response,next) {
-	
+	console.log(request.body);
 	var eventId = request.body.eventId;
 	var sitterId = request.body.sitterId;
 	var startTime = request.body.startTime;
 	var endTime = request.body.endTime;
+	
+	var startTimeSt = request.body.startTimeSt;
+	var endTimeSt = request.body.endTimeSt;
+	
 	var status = request.body.status;//***********
 	var car = request.body.car;
 	
@@ -162,7 +172,7 @@ app.post('/event/updateEvent', function (request, response,next) {
 	var allDay = request.body.allDay;
 	var message = request.body.message;
 	
-	if ( eventId == null || sitterId == null || startTime == null || endTime == null || status == null || car == null || sign_language == null || 
+	if ( eventId == null || sitterId == null || startTime == null || endTime == null || startTimeSt == null || endTimeSt == null ||  status == null || car == null || sign_language == null || 
 	special_needs == null || driving_licence == null || home_work == null || coocking == null || job_type == null || hourly_wage == null || car_wage == null
 	|| driving_licence_wage == null || special_needs_wage == null || title == null || allDay == null || message == null   )
 	{
@@ -171,7 +181,8 @@ app.post('/event/updateEvent', function (request, response,next) {
 		return;
 	}
 	
-	console.log("/event/updateEvent[request] - eventId:" + eventId + ",sitterId:" +  sitterId + ",startTime:" +  startTime  + ",endTime:" +  endTime + ",status:" +  status +
+	console.log("/event/updateEvent[request] - eventId:" + eventId + ",sitterId:" +  sitterId + ",startTime:" +  startTime  + ",endTime:" +  endTime + 
+	",startTimeSt:" +  startTimeSt + ",endTimeSt:" +  endTimeSt + ",status:" +  status +
 	", car:" + car + ",sign_language:" +  sign_language + ",special_needs:" +  special_needs  + ",driving_licence:" +  driving_licence + ",home_work:" +  home_work +
 	", coocking:" + coocking + ",job_type:" +  job_type + ",hourly_wage:" +  hourly_wage  + ",car_wage:" +  car_wage + ",driving_licence_wage:" +  driving_licence_wage +
 	",special_needs_wage:" +  special_needs_wage);
@@ -179,7 +190,7 @@ app.post('/event/updateEvent', function (request, response,next) {
 	var query = "call update_event('" +  sitterId + "','" + startTime + "','" + endTime + "','" + status + 
 	"','" + car + "','" + sign_language + "','" + special_needs + "','" + driving_licence + "','" + home_work + 
 	"','" + coocking + "','" + job_type + "','" + hourly_wage + "','" + car_wage + "','" + driving_licence_wage + 
-	"','" + special_needs_wage + "','" + eventId + "','" + title + "','" + allDay + "','" + message + 
+	"','" + special_needs_wage + "','" + eventId + "','" + title + "','" + allDay + "','" + message +  "','" + startTimeSt + "','" + endTimeSt +
 	"')";
 	console.log('query: ' + query);
 	connectDatabase().query(query, function(err, rows) {

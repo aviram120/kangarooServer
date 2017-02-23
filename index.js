@@ -59,7 +59,12 @@ app.get('/getMysql', function (request, response) {
 });
 
 
-
+app.post('/gettest', function (request, response) {
+	console.log( request.query);	
+	console.log(request.body);	
+	var mail = request.body.mail;
+	response.json({success:true, data:mail });
+});
 
 
 
