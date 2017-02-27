@@ -33,6 +33,7 @@ app.post('/event/addEvent', function (request, response,next) {
 	var message = request.body.message;
 
 	
+	
 	if (parentId == null || sitterId == null || startTime == null || endTime == null || startTimeSt == null || endTimeSt == null || status == null || car == null || sign_language == null || 
 	special_needs == null || driving_licence == null || home_work == null || coocking == null || job_type == null || hourly_wage == null || car_wage == null
 	|| driving_licence_wage == null || special_needs_wage == null || title == null || allDay == null || message == null )
@@ -87,7 +88,7 @@ app.post('/event/changeStatusEvent', function (request, response,next) {
 	}
 	console.log("/event/changeStatusEvent[request] - eventId:" + eventId + ",status:" +  status );
 	var query = "call change_status_event('" + eventId + "','" + status + "')";
-	console.log('query: ' + query);
+	//console.log('query: ' + query);
 	connectDatabase().query(query, function(err, rows) {
 			if (err) {
 				console.log('error: ', err);
