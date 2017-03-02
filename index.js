@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
 //routes
 require("./routes/dbMysql");
 require("./routes/user")(app);
-require("./routes/additional_feature")(app);
+require("./routes/settings")(app);
 require("./routes/review")(app);
 require("./routes/event")(app);
 
