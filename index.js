@@ -43,6 +43,7 @@ require("./routes/user")(app);
 require("./routes/settings")(app);
 require("./routes/review")(app);
 require("./routes/event")(app);
+require("./routes/bookMe")(app);
 
 app.get('/', function(request, response) {
   response.render('pages/index');
