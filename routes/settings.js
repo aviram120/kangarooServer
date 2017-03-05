@@ -17,7 +17,7 @@ app.get('/settings/get_global_settings', function (request, response,next) {
 			{
 				stResp = rows[0];
 			}
-			else
+			else 
 			{
 				status = false;
 				stResp = "There isn't data for this parameters";
