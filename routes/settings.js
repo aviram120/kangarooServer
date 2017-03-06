@@ -22,19 +22,18 @@ app.get('/settings/get_global_settings', function (request, response,next) {
 				status = false;
 				stResp = "There isn't data for this parameters";
 			}
-			
+			/*
 			var stdata = JSON.stringify(stResp);
 			var sdata = JSON.parse(stdata);
-			//var bufferJson = require('buffer-json');
 			var buf = Buffer.from(sdata[0].photo.data, 'base64');//base64_decode 'base64'
-			sdata[0].photo = buf;
+			sdata[0].photo = buf;*/
 			
 			
 			
 			//console.log(sdata[0].photo.data);
-			console.log("/settings/get_global_settings[response] - " + sdata);
-			response.json({success:status, data: sdata});
-			//response.send(sdata);
+			console.log("/settings/get_global_settings[response] - " + stResp);
+			response.json({success:status, data: stResp});
+			//response.send(stResp[0].photo);
 		});		
 });	
 
