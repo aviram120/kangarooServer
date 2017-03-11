@@ -61,9 +61,12 @@ app.post('/settings/addSettings', function (request, response,next) {
 				throw err;
 			}
 			var stResp;
-			if (rows.affectedRows == 1) 
+			console.log(rows[0][0].resp);
+			var returnId = rows[0][0].resp;
+			if (returnId != null) 
 			{
-				stResp = "add:true";
+				stResp = "id:" + returnId;
+				
 			}
 			else
 			{
