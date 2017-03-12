@@ -14,7 +14,6 @@ this.matchEventSitter =  function (eventId) {
 			var pipeSitters = "";
 			for (var i = 0; i< rows.length; i++)
 			{
-				console.log(rows[i].id);
 				pipeSitters = pipeSitters + rows[i].id ;
 				
 				if (i+1 != rows.length)
@@ -23,13 +22,29 @@ this.matchEventSitter =  function (eventId) {
 				}
 				
 			}
+			//insert to db (table matchEventSitter)
+			//send push to all sitter
 			console.log(pipeSitters);
-			//console.log(rows);
-			//response.json({success:true});
-			
-			//console.log("/additionalFeature/addAdditionalFeature[response] - " + stResp);
 		});	
+		getJob(89,65);
 };
+
+this.getJob =  function (eventId,sitterId) {
+	
+	var query = "SELECT * FROM  `event` event Left Join `user` user ON(event.`parent_id` = user.`id`) WHERE  `id_event` =89";
+	connectDatabase().query(query, function(err, rows) {
+			if (err) {
+				console.log('error: ', err);
+				throw err;
+			}
+			
+			
+			console.log(rows);
+		});	
+	
+	
+};
+
 
 	
 	

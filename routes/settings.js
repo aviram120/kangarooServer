@@ -154,7 +154,7 @@ app.post('/settings/updateSettings', function (request, response,next) {
 			response.json({success:true, data:stResp });
 		});	
 });
-app.delete('/settings/deleteSettings', function (request, response,next) {
+app.post('/settings/deleteSettings', function (request, response,next) {
 
 	var id = request.body.id;
 
