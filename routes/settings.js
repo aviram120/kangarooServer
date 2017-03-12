@@ -65,7 +65,7 @@ app.post('/settings/addSettings', function (request, response,next) {
 			var returnId = rows[0][0].resp;
 			if (returnId != null) 
 			{
-				stResp = "id:" + returnId;
+				stResp =  returnId;
 				
 			}
 			else
