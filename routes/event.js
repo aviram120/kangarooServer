@@ -1,7 +1,10 @@
 require("./dbMysql")();
+var async = require('async');
 /*****************************event - Function*****************************/
 module.exports = function (app) {	
 
+
+//can delete!! 
 app.post('/event/addEvent', function (request, response,next) {
 	
 	var parentId = request.body.parentId;
@@ -73,6 +76,93 @@ app.post('/event/addEvent', function (request, response,next) {
 			response.json({success:true, data:stResp });
 		});
 			
+});
+
+app.post('/event/addEventWithSrttings', function (request, response,next) {
+	
+	var inputJson = request.body;	
+	
+	console.log("/event/addEventWithSrttings[request] - inputJson:" + JSON.stringify(inputJson) );
+	
+	if (inputJson == null )
+	{
+		var msg = "one or more params is missing";
+		response.json({success:false, inputJson:msg });
+		return;
+	}
+
+		async.series([
+			function(callback){
+				// function one - add event to DB	
+				var stResp;
+					var query = "call add_event('" + inputJson.event.parentId + "','" + inputJson.event.sitterId + "','" + inputJson.event.startTime + "','" + inputJson.event.endTime + "','" + inputJson.event.status + 
+					"','" + inputJson.event.car + "','" + inputJson.event.sign_language + "','" + inputJson.event.special_needs + "','" + inputJson.event.driving_licence + "','" + inputJson.event.home_work + 
+					"','" + inputJson.event.coocking + "','" + inputJson.event.job_type + "','" + inputJson.event.hourly_wage + "','" + inputJson.event.car_wage + "','" + inputJson.event.driving_licence_wage + 
+					"','" + inputJson.event.special_needs_wage + "','" + inputJson.event.title + "','" + inputJson.event.allDay + "','" + inputJson.event.message +  "','" + inputJson.event.startTimeSt + "','" + inputJson.event.endTimeSt +
+					"')";
+					
+				connectDatabase().query(query, function(err, rows) {
+				if (err) {
+					console.log('error: ', err);
+					throw err;
+				}
+				
+				if (rows.affectedRows == 1) 
+				{
+					stResp = "add event:true,";
+				}
+				else
+				{
+					stResp = "add event:false,";
+				}
+
+				callback(null, stResp);
+				});	
+			},
+			function(callback){
+				// function two - add settings to DB
+				
+				query = "INSERT INTO `settings`( `userId`, `eventId`, `settingId`, `value`) VALUES ";
+				var querySetting = "";
+				var lengthSettings  = inputJson.settings.length;
+				for (var i = 0; i < lengthSettings; i++)
+				{
+					var userId = inputJson.settings[i].userId;
+					var eventId = inputJson.settings[i].eventId;
+					var settingId = inputJson.settings[i].settingId;
+					var value = inputJson.settings[i].value;
+					
+					querySetting = querySetting + "(" + userId + "," + eventId + "," + settingId + "," + value  + ")";
+					if (i+1 != lengthSettings )
+					{
+						querySetting = querySetting + ",";
+					}
+				}
+				query = query + querySetting;
+			
+				connectDatabase().query(query, function(err, rows) {
+						if (err) {
+							console.log('error: ', err);
+							throw err;
+						}
+						var stResp;
+						if (rows.affectedRows == lengthSettings) 
+						{
+							stResp = "add settings:true";
+						}
+						else
+						{
+							stResp = "add settings:false";
+						}
+						callback(null,  stResp);
+					});
+			},
+		],
+		// optional callback
+		function(err, results){
+			console.log("/event/addEventWithSrttings[response]" + results);
+			response.json({success:true, data:results });
+		});	
 });
 
 app.post('/event/changeStatusEvent', function (request, response,next) {
