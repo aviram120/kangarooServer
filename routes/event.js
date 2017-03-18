@@ -91,6 +91,7 @@ app.post('/event/addEventWithSrttings', function (request, response,next) {
 		return;
 	}
 
+	var eventId =-1;
 		async.series([
 			function(callback){
 				// function one - add event to DB	
@@ -106,17 +107,18 @@ app.post('/event/addEventWithSrttings', function (request, response,next) {
 					console.log('error: ', err);
 					throw err;
 				}
-				
-				if (rows.affectedRows == 1) 
+				if (rows[0][0].resp != null) 
 				{
+					eventId = rows[0][0].resp;
 					stResp = "add event:true,";
 				}
 				else
 				{
 					stResp = "add event:false,";
 				}
-
+				
 				callback(null, stResp);
+				matchEventSitter(eventId);//sent to sitter the event(this function is in "match.js")
 				});	
 			},
 			function(callback){
@@ -124,44 +126,52 @@ app.post('/event/addEventWithSrttings', function (request, response,next) {
 				
 				query = "INSERT INTO `settings`( `userId`, `eventId`, `settingId`, `value`) VALUES ";
 				var querySetting = "";
-				var lengthSettings  = inputJson.settings.length;
-				for (var i = 0; i < lengthSettings; i++)
+				if (inputJson.settings != null)
 				{
-					var userId = inputJson.settings[i].userId;
-					var eventId = inputJson.settings[i].eventId;
-					var settingId = inputJson.settings[i].settingId;
-					var value = inputJson.settings[i].value;
-					
-					querySetting = querySetting + "(" + userId + "," + eventId + "," + settingId + "," + value  + ")";
-					if (i+1 != lengthSettings )
+					var lengthSettings  = inputJson.settings.length;
+					for (var i = 0; i < lengthSettings; i++)
 					{
-						querySetting = querySetting + ",";
+						var userId = inputJson.settings[i].userId;
+						var eventId = inputJson.settings[i].eventId;
+						var settingId = inputJson.settings[i].settingId;
+						var value = inputJson.settings[i].value;
+						
+						querySetting = querySetting + "(" + userId + "," + eventId + "," + settingId + "," + value  + ")";
+						if (i+1 != lengthSettings )
+						{
+							querySetting = querySetting + ",";
+						}
 					}
+					query = query + querySetting;
+				
+					connectDatabase().query(query, function(err, rows) {
+							if (err) {
+								console.log('error: ', err);
+								throw err;
+							}
+							var stResp;
+							if (rows.affectedRows == lengthSettings) 
+							{
+								stResp = "add settings:true";
+							}
+							else
+							{
+								stResp = "add settings:false";
+							}
+							callback(null,  stResp);
+						});
 				}
-				query = query + querySetting;
-			
-				connectDatabase().query(query, function(err, rows) {
-						if (err) {
-							console.log('error: ', err);
-							throw err;
-						}
-						var stResp;
-						if (rows.affectedRows == lengthSettings) 
-						{
-							stResp = "add settings:true";
-						}
-						else
-						{
-							stResp = "add settings:false";
-						}
-						callback(null,  stResp);
-					});
+				else
+				{
+					callback(null, "add settings: false, Ther is no data for add settings");
+				}
 			},
 		],
 		// optional callback
 		function(err, results){
 			console.log("/event/addEventWithSrttings[response]" + results);
 			response.json({success:true, data:results });
+			
 		});	
 });
 

@@ -48,7 +48,7 @@ app.post('/settings/addSettings', function (request, response,next) {
 	
 	if (settingId == null || value == null || userId == null || eventId == null )
 	{
-		var errMsg = "on of the parameters is null";
+		var errMsg = "one of the parameters is null";
 		console.log(errMsg);
 		response.json({success:false, data:errMsg });
 		return;
