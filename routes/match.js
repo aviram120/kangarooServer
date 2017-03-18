@@ -10,7 +10,7 @@ this.matchEventSitter =  function (eventId) {
 	var queryMainSitters = "";
 	var numOfSittersThatFit;
 	
-	async.series([
+	async.series([ 
 		function(callback){
 				// function one - get all sittest 
 				//TODO- make sp
