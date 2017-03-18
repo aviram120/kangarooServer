@@ -96,7 +96,7 @@ app.get('/settings/get_settings_by_evenid_or_userid', function (request, respons
 	if (eventId == null)
 	{
 		eventId=-1; 
-	}
+	} 
 	
 	var query = "call get_settings_by_evenid_or_userid('" + usedId + "','" + eventId +"')";
 	connectDatabase().query(query, function(err, rows) {
