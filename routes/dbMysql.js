@@ -8,7 +8,7 @@ var mysqlConnector;
 	  user     : 'AAAljt4_kangaroo',
 	  password : 'E3p5i!vv8!',
 	  database : 'AAAljt4_kangaroo',
-      insecureAuth: true
+      insecureAuth: true 
 	};
 	
 var settings2 = {
